@@ -11,6 +11,8 @@
 
 #Imports needed to use this code
 import os 
+from datetime import datetime
+
 #Massive list of colors to easily use on all console systems
 Black = "\u001b[30m"    
 Red = "\u001b[31m"
@@ -33,9 +35,22 @@ BrightWhite = "\u001b[37;1m"
 #Premade message functions 
 def successmessage(successmessage):
     print("[" + BrightGreen + "Success" + Reset + "] " + successmessage)
-def errormessage(errormessage):
+def errormessage(errormessage, logerror):
     print("[" + BrightRed + "Error" + Reset + "] " + errormessage)
+    def errorlogger():
+        if logerror == "true":
+            if os.path.exists("errorlog.txt"):
+                now = datetime.now()
+                current_time = now.strftime("%H:%M:%S")
+                errorlogging = open("errorlog.txt", "a")
+                errorlogging.write(current_time + " ERROR: " + errormessage + "\n")
+            else: 
+                 errorlogging = open("errorlog.txt", "x") 
+                 errorlogger()
+    errorlogger()
+
 def infomessage(infomessage):
     print("[" + BrightCyan + "Info" + Reset + "] " + infomessage)
 # Premade tools and functions / lambdas 
-clea\r = lambda: os.system('cls' if os.name=='nt' else 'clear') # This must be run when the program starts to clear a color bug on windows consoles.
+clear = lambda: os.system('cls' if os.name=='nt' else 'clear') # This must be run when the program starts to clear a color bug on windows consoles.
+
