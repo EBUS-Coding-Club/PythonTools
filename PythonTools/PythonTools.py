@@ -53,4 +53,10 @@ def infomessage(infomessage):
     print("[" + BrightCyan + "Info" + Reset + "] " + infomessage)
 # Premade tools and functions / lambdas 
 clear = lambda: os.system('cls' if os.name=='nt' else 'clear') # This must be run when the program starts to clear a color bug on windows consoles.
-
+def clearlog(): # Function to clear the log file. 
+    if os.path.exists("errorlog.txt"):
+        f = open("errorlog.txt", "w")
+        f.write("")
+        f.close()
+    else: 
+        errorlogging = open("errorlog.txt", "x") 
