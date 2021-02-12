@@ -32,31 +32,46 @@ BrightMagenta = "\u001b[35;1m"
 BrightCyan = "\u001b[36;1m" # Used in premade messages. Must be included to function correctly.
 BrightWhite = "\u001b[37;1m"
 
+
+
+
 #Premade message functions 
 def successmessage(successmessage):
     print("[" + BrightGreen + "Success" + Reset + "] " + successmessage)
-def errormessage(errormessage, logerror):
+def errormessage(errormessage):
     print("[" + BrightRed + "Error" + Reset + "] " + errormessage)
-    def errorlogger():
-        if logerror == "true":
-            if os.path.exists("errorlog.txt"):
-                now = datetime.now()
-                current_time = now.strftime("%H:%M:%S")
-                errorlogging = open("errorlog.txt", "a")
-                errorlogging.write(current_time + " ERROR: " + errormessage + "\n")
-            else: 
-                 errorlogging = open("errorlog.txt", "x") 
-                 errorlogger()
-    errorlogger()
 
 def infomessage(infomessage):
     print("[" + BrightCyan + "Info" + Reset + "] " + infomessage)
 # Premade tools and functions / lambdas 
 clear = lambda: os.system('cls' if os.name=='nt' else 'clear') # This must be run when the program starts to clear a color bug on windows consoles.
+
 def clearlog(): # Function to clear the log file. 
-    if os.path.exists("errorlog.txt"):
-        f = open("errorlog.txt", "w")
-        f.write("")
-        f.close()
+    if os.path.exists("log.txt"):
+        loggingfile = open("log.txt", "w")
+        loggingfile.write("")
+        loggingfile.close()
     else: 
-        errorlogging = open("errorlog.txt", "x") 
+        loggingfile = open("log.txt", "x") 
+
+def logger(logprefix,logmessage): # Logging function that supports prefixes and custom messages.
+
+    def logging():
+        if os.path.exists("log.txt"):
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            loggingfile = open("log.txt", "a")
+            loggingfile.write(current_time + " " + logprefix + ": " + logmessage + "\n")
+            loggingfile.close()
+        else:
+            loggingfile = open("log.txt", "x") 
+            logging()
+    logging()
+
+
+
+
+clear()
+errormessage("Somthing broke on line 304.")
+logger("Error","Somthing broke on line 304.")
+input("Wait")
